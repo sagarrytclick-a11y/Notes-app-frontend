@@ -1,2 +1,18 @@
+[build]
+  # Ye Netlify ko batayega ki 'frontend' folder ke andar jaakar kaam shuru kare
+  base = "frontend"
+  
+  # React build karne ki command
+  command = "npm run build"
+  
+  # Build hone ke baad jo folder banta hai uska naam
+  publish = "build"
+
 [build.environment]
-NODE_VERSION = "18"
+  NODE_VERSION = "18"
+
+# Ye section 'Page Not Found' error ko fix karega jab aap page refresh karenge
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
