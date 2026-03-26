@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { notesAPI } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import NoteForm from './NoteForm';
@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const { user, logout } = useAuth();
 
-  const fetchNotes = async () => {
+  const fetchNotes = useCallback(async () => {
     try {
       setLoading(true);
       const response = await notesAPI.getNotes();
@@ -34,11 +34,11 @@ const Dashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [logout]);
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [fetchNotes]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this note?')) return;
